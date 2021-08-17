@@ -1,9 +1,8 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import Contxt from "../../contxt/contxt";
 
 export default function Home({ isConnected }) {
-  const [state1, SetState1] = useState(null);
-  const [state2, SetState2] = useState(null);
-  const [state3, SetState3] = useState(null);
+  const cntx = useContext(Contxt);
   return (
     <>
       <div className="flex flex-row-reverse justify-around">
@@ -12,18 +11,18 @@ export default function Home({ isConnected }) {
             <button
               className={
                 "bg-green-600 p-2 h-10 " +
-                (state1 == "foroosh" ? `border-4 border-gray-900` : ``)
+                (cntx.state1 == "foroosh" ? `border-4 border-gray-900` : ``)
               }
-              onClick={() => SetState1("foroosh")}
+              onClick={() => cntx.setState1("foroosh")}
             >
               foroosh
             </button>
             <button
               className={
                 "bg-red-600 p-2 h-10 " +
-                (state1 == "kharid" ? `border-4 border-gray-900` : ``)
+                (cntx.state1 == "kharid" ? `border-4 border-gray-900` : ``)
               }
-              onClick={() => SetState1("kharid")}
+              onClick={() => cntx.setState1("kharid")}
             >
               kharid
             </button>
@@ -35,27 +34,27 @@ export default function Home({ isConnected }) {
             <button
               className={
                 "bg-blue-600 p-2 h-10 " +
-                (state2 == "product" ? `border-4 border-gray-900` : ``)
+                (cntx.state2 == "product" ? `border-4 border-gray-900` : ``)
               }
-              onClick={() => SetState2("product")}
+              onClick={() => cntx.setState2("product")}
             >
               product
             </button>
             <button
               className={
                 "bg-yellow-600 p-2 h-10 " +
-                (state2 == "chek" ? `border-4 border-gray-900` : ``)
+                (cntx.state2 == "chek" ? `border-4 border-gray-900` : ``)
               }
-              onClick={() => SetState2("chek")}
+              onClick={() => cntx.setState2("chek")}
             >
               chek
             </button>
             <button
               className={
                 "bg-gray-600 p-2 h-10 " +
-                (state2 == "hesab" ? `border-4 border-gray-900` : ``)
+                (cntx.state2 == "hesab" ? `border-4 border-gray-900` : ``)
               }
-              onClick={() => SetState2("hesab")}
+              onClick={() => cntx.setState2("hesab")}
             >
               hesab
             </button>
@@ -67,18 +66,18 @@ export default function Home({ isConnected }) {
             <button
               className={
                 "bg-green-300 p-2 h-10 " +
-                (state3 == "factor" ? `border-4 border-gray-900` : ``)
+                (cntx.state3 == "factor" ? `border-4 border-gray-900` : ``)
               }
-              onClick={() => SetState3("factor")}
+              onClick={() => cntx.setState3("factor")}
             >
               factor
             </button>
             <button
               className={
                 "bg-red-300 p-2 h-10 " +
-                (state3 == "pish" ? `border-4 border-gray-900` : ``)
+                (cntx.state3 == "pish" ? `border-4 border-gray-900` : ``)
               }
-              onClick={() => SetState3("pish")}
+              onClick={() => cntx.setState3("pish")}
             >
               pish factor
             </button>

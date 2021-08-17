@@ -21,12 +21,15 @@ export default async function handler(req, res) {
   //     .toArray();
 
   const data = await db
-    .collection("persons")
-    .find({
-      name: {
-        $regex: new RegExp(".*" + req.body.name + ".*", "i"),
+    .collection("users")
+    .find(
+      {
+        name: {
+          $regex: new RegExp(".*" + req.body.name + ".*", "i"),
+        },
       },
-    })
+      { name: 1 }
+    )
     .toArray();
 
   //   console.log(req.body.name);

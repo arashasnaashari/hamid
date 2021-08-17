@@ -22,11 +22,14 @@ export default async function handler(req, res) {
 
   const data = await db
     .collection("products")
-    .find({
-      name: {
-        $regex: new RegExp(".*" + req.body.name + ".*", "i"),
+    .find(
+      {
+        name: {
+          $regex: new RegExp(".*" + req.body.name + ".*", "i"),
+        },
       },
-    })
+      { name: 1 }
+    )
     .toArray();
 
   //   console.log(req.body.name);

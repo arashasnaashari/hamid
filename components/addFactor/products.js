@@ -1,37 +1,11 @@
-import { useState } from "react";
-
+import { useState, useContext } from "react";
+import Contxt from "../../contxt/contxt";
+import PopNew from "./modalnew";
+import PopEdit from "./modaledit";
+import PopDelete from "./modaldelete";
 export default function Home({ isConnected }) {
-  const [chekPrice, SetChekPrise] = useState(null);
-  const [chekNote, SetChekNote] = useState(null);
+  const cntx = useContext(Contxt);
 
-  const demo = [
-    {
-      name: "sensor",
-      n: "3",
-      priceOne: "120000",
-      _id: "113232",
-      percent: "5",
-    },
-    {
-      name: "thermo",
-      n: "10",
-      priceOne: "50000",
-      _id: "223445",
-      percent: "10",
-    },
-  ];
-
-  const [products, SetProducts] = useState(demo);
-  const handleNewRow = () => {
-    const newProductRow = {
-      name: "sensor",
-      n: "3",
-      priceOne: "120000",
-      _id: "1123",
-      percent: "5",
-    };
-    SetProducts([...products, newProductRow]);
-  };
   return (
     <>
       <div>
@@ -47,68 +21,61 @@ export default function Home({ isConnected }) {
             </tr>
           </thead>
           <tbody>
-            {products.map((p) => {
-              return (
-                <tr key={p._id}>
-                  <td className="p-4 w-1/6 border border-green-600">
-                    {p.name}
-                  </td>
-                  <td className="p-4 w-1/6 border border-green-600">{p.n}</td>
-                  <td className="p-4 w-1/6 border border-green-600">
-                    {p.priceOne}
-                  </td>
-                  <td className="p-4 w-1/6 border border-green-600">
-                    {p.percent}%
-                  </td>
-                  <td className="p-4 w-1/6 border border-green-600">
-                    {p.n * p.priceOne}
-                  </td>
-                  <td className="p-4 w-1/6 border border-green-600">
-                    <button
-                      onClick={() => {
-                        console.log(p.priceOne);
-                      }}
-                    >
-                      Edit
-                    </button>
-                  </td>
-                </tr>
-              );
-            })}
+            {cntx.products &&
+              cntx.products.map((p) => {
+                return (
+                  <tr key={p._id}>
+                    <td className="p-4 w-1/6 border border-green-600">
+                      {p.name}
+                    </td>
+                    <td className="p-4 w-1/6 border border-green-600">{p.n}</td>
+                    <td className="p-4 w-1/6 border border-green-600">
+                      {new Intl.NumberFormat("fa", {
+                        style: "currency",
+                        currency: "IRR",
+                      }).format(p.price)}
+                    </td>
+                    <td className="p-4 w-1/6 border border-green-600">
+                      {p.percent}%
+                    </td>
+                    <td className="p-4 w-1/6 border border-green-600">
+                      {new Intl.NumberFormat("fa", {
+                        style: "currency",
+                        currency: "IRR",
+                      }).format(
+                        p.n * p.price - (p.n * p.price * p.percent) / 100
+                      )}
+                    </td>
+                    <td className="p-4 w-1/6 border border-green-600">
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          const editeds = {
+                            name: p.name,
+                            n: p.n,
+                            price: p.price,
+                            percent: p.percent,
+                            _id: p._id,
+                          };
+                          cntx.setEdited([editeds]);
+                        }}
+                      >
+                        <PopEdit />
+                      </button>{" "}
+                      |{" "}
+                      <button>
+                        <PopDelete id={p._id} />
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
           </tbody>
         </table>
-        <button className="bg-indigo-700 p-3" onClick={() => handleNewRow()}>
-          new row +
+        <button className="bg-indigo-700 p-3">
+          <PopNew />
         </button>
       </div>
-
-      {/* <div className="mt-66">
-        <h1>chek or hesab</h1>
-        <input
-          id="inputPrise"
-          type="number"
-          placeholder="arzesh ..."
-          onInput={(e) =>
-            SetChekPrise(document.getElementById("inputPrise").value)
-          }
-        ></input>
-        <span>
-          {new Intl.NumberFormat("fa", {
-            style: "currency",
-            currency: "IRR",
-          }).format(chekPrice)}
-        </span>
-        <textarea
-          id="w3review"
-          rows="4"
-          cols="50"
-          onInput={(e) =>
-            SetChekNote(document.getElementById("w3review").value)
-          }
-        ></textarea>
-        <span>{chekNote}</span>
-      </div>
-    */}
     </>
   );
 }
